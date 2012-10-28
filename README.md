@@ -1,4 +1,3 @@
-pbs-java-api
-============
+# PBS Java API
 
-PBS Java API
+A simple Java API for interfacing with a PBS cluster.
