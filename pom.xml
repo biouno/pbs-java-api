@@ -27,9 +27,9 @@
 		<url>http://www.tupilabs.com</url>
 	</organization>
 	<scm>
-		<url>https://github.com/tupilabs/pbs-java-apij</url>
-		<connection>scm:git:git://github.com/tupilabs/pbs-java-apij.git</connection>
-		<developerConnection>scm:git:git@github.com:tupilabs/pbs-java-apij.git</developerConnection>
+		<url>https://github.com/tupilabs/pbs-java-api</url>
+		<connection>scm:git:git://github.com/tupilabs/pbs-java-api.git</connection>
+		<developerConnection>scm:git:git@github.com:tupilabs/pbs-java-api.git</developerConnection>
 	</scm>
 	<issueManagement>
 		<url>https://github.com/tupilabs/pbs-java-apij/issues</url>
