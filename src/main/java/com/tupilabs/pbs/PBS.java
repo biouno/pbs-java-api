@@ -167,21 +167,41 @@ public class PBS {
     /**
      * PBS qstat command. 
      * <p>
-     * Equivalent to qstat -f [name]
+     * Equivalent to qstat -f
      * @return list of jobs
      */
-    public static List<Job> qstatJobs() {
-        return qstatJobs(null);
+    public static List<Job> qstat() {
+        return qstat((String)null);
     }
     
     /**
      * PBS qstat command. 
      * <p>
-     * Equivalent to qstat -f [name]
+     * Equivalent to qstat -f [queue_name]
+     * @return list of jobs
+     */
+    public static List<Job> qstat(Queue queue) {
+        return qstat(queue.getName());
+    }
+    
+    /**
+     * PBS qstat command. 
+     * <p>
+     * Equivalent to qstat -f [job_name]
+     * @return list of jobs
+     */
+    public static List<Job> qstat(Job job) {
+        return qstat(job.getName());
+    }
+    
+    /**
+     * PBS qstat command. 
+     * <p>
+     * Equivalent to qstat -f [param]
      * @param name job name
      * @return list of jobs
      */
-    public static List<Job> qstatJobs(String name) {
+    public static List<Job> qstat(String name) {
         final CommandLine cmdLine = new CommandLine(COMMAND_QSTAT);
         cmdLine.addArgument(PARAMETER_FULL_STATUS);
         if(StringUtils.isNotBlank(name)) {
