@@ -236,6 +236,71 @@ public class PBS {
         return (jobs == null ? new ArrayList<Job>(0) : jobs);
     }
     
+    /**
+     * PBS qdel command. 
+     * <p>
+     * Equivalent to qdel [param]
+     * @param name jobId job id
+     */
+    public static void qdel(String jobId) {
+    	final CommandLine cmdLine = new CommandLine(COMMAND_QDEL);
+        cmdLine.addArgument(jobId);
+        
+        final OutputStream out = new ByteArrayOutputStream();
+        final OutputStream err = new ByteArrayOutputStream();
+        
+        DefaultExecuteResultHandler resultHandler;
+        try {
+            resultHandler = execute(cmdLine, out, err);
+            resultHandler.waitFor(DEFAULT_TIMEOUT);
+        } catch (ExecuteException e) {
+            throw new PBSException("Failed to execute qdel command: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new PBSException("Failed to execute qdel command: " + e.getMessage(), e);
+        } catch (InterruptedException e) {
+            throw new PBSException("Failed to execute qdel command: " + e.getMessage(), e);
+        }
+        
+        final int exitValue = resultHandler.getExitValue();
+        LOGGER.info("qdel exit value: " + exitValue);
+        
+        if (exitValue != 0)
+        	throw new PBSException("Failed to delete job " + jobId + ". Error output: " + err.toString());
+    }
+    
+    /**
+     * PBS qsub command. 
+     * <p>
+     * Equivalent to qsub [param]
+     * @param input job input file
+     */
+    public static void qsub(String input) {
+    	final CommandLine cmdLine = new CommandLine(COMMAND_QSUB);
+        cmdLine.addArgument(input);
+        
+        final OutputStream out = new ByteArrayOutputStream();
+        final OutputStream err = new ByteArrayOutputStream();
+        
+        DefaultExecuteResultHandler resultHandler;
+        try {
+            resultHandler = execute(cmdLine, out, err);
+            resultHandler.waitFor(DEFAULT_TIMEOUT);
+        } catch (ExecuteException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        } catch (InterruptedException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        }
+        
+        final int exitValue = resultHandler.getExitValue();
+        LOGGER.info("qdel exit value: " + exitValue);
+        LOGGER.fine("qdel output: " + out.toString());
+        
+        if (exitValue != 0)
+        	throw new PBSException("Failed to submit job script " + input + ". Error output: " + err.toString());
+    }
+    
     /*
      * ------------------------------
      * Utility methods
@@ -265,6 +330,8 @@ public class PBS {
     private static final String COMMAND_QNODES = "qnodes";
     private static final String PARAMETER_XML = "-x";
     private static final String COMMAND_QSTAT = "qstat";
+    private static final String COMMAND_QDEL = "qdel";
+    private static final String COMMAND_QSUB = "qsub";
     private static final String PARAMETER_FULL_STATUS = "-f";
     private static final String PARAMETER_QUEUE = "-Q";
     
