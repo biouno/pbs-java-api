@@ -19,7 +19,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<url>https://github.com/kinow/pbs-java-api</url>
+	<url>https://github.com/biouno/pbs-java-api</url>
 
 	<inceptionYear>2012</inceptionYear>
 
@@ -28,16 +28,16 @@
 		<url>http://www.tupilabs.com</url>
 	</organization>
 	<scm>
-		<url>https://github.com/tupilabs/pbs-java-api</url>
-		<connection>scm:git:git://github.com/tupilabs/pbs-java-api.git</connection>
-		<developerConnection>scm:git:git@github.com:tupilabs/pbs-java-api.git</developerConnection>
+		<url>https://github.com/biouno/pbs-java-api</url>
+		<connection>scm:git:git://github.com/biouno/pbs-java-api.git</connection>
+		<developerConnection>scm:git:git@github.com:biouno/pbs-java-api.git</developerConnection>
 	</scm>
 	<issueManagement>
-		<url>https://github.com/tupilabs/pbs-java-apij/issues</url>
+		<url>https://github.com/biouno/pbs-java-apij/issues</url>
 		<system>GitHub</system>
 	</issueManagement>
 	<ciManagement>
-		<url>https://buildhive.cloudbees.com/job/tupilabs/job/pbs-java-api/</url>
+		<url>https://buildhive.cloudbees.com/job/biouno/job/pbs-java-api/</url>
 		<system>Jenkins</system>
 	</ciManagement>
 
