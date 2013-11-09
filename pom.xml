@@ -4,7 +4,7 @@
 
 	<groupId>com.tupilabs</groupId>
 	<artifactId>pbs-java-api</artifactId>
-	<version>0.4-SNAPSHOT</version>
+	<version>0.4</version>
 	<name>PBS Java API</name>
 	<description>An API written in Java for interfacing with PBS clusters</description>
 
