@@ -45,6 +45,7 @@ import com.tupilabs.pbs.parser.NodeXmlParser;
 import com.tupilabs.pbs.parser.ParseException;
 import com.tupilabs.pbs.parser.QstatJobsParser;
 import com.tupilabs.pbs.parser.QstatQueuesParser;
+import com.tupilabs.pbs.util.CommandOutput;
 import com.tupilabs.pbs.util.PBSException;
 
 
@@ -301,6 +302,42 @@ public class PBS {
         	throw new PBSException("Failed to submit job script " + input + ". Error output: " + err.toString());
     }
     
+    /**
+     * PBS tracejob command.
+     * <p>
+     * Equivalent to tracejob -n [numberOfDays] [jobId]
+     * @param jobId
+     * @param numberOfDays
+     * @return tracejob output
+     */
+    public static CommandOutput traceJob(String jobId, int numberOfDays) {
+    	final CommandLine cmdLine = new CommandLine(COMMAND_TRACEJOB);
+    	cmdLine.addArgument(PARAMETER_NUMBER_OF_DAYS);
+    	cmdLine.addArgument(Integer.toString(numberOfDays));
+        cmdLine.addArgument(jobId);
+        
+        final OutputStream out = new ByteArrayOutputStream();
+        final OutputStream err = new ByteArrayOutputStream();
+        
+        DefaultExecuteResultHandler resultHandler;
+        try {
+            resultHandler = execute(cmdLine, out, err);
+            resultHandler.waitFor(DEFAULT_TIMEOUT);
+        } catch (ExecuteException e) {
+            throw new PBSException("Failed to execute tracejob command: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new PBSException("Failed to execute tracejob command: " + e.getMessage(), e);
+        } catch (InterruptedException e) {
+            throw new PBSException("Failed to execute tracejob command: " + e.getMessage(), e);
+        }
+        
+        final int exitValue = resultHandler.getExitValue();
+        LOGGER.info("tracejob exit value: " + exitValue);
+        LOGGER.fine("tracejob output: " + out.toString());
+        
+        return new CommandOutput(out.toString(), err.toString());
+    }
+    
     /*
      * ------------------------------
      * Utility methods
@@ -328,12 +365,16 @@ public class PBS {
     private static final Logger LOGGER = Logger.getLogger(PBS.class.getName());
 
     private static final String COMMAND_QNODES = "qnodes";
-    private static final String PARAMETER_XML = "-x";
     private static final String COMMAND_QSTAT = "qstat";
     private static final String COMMAND_QDEL = "qdel";
     private static final String COMMAND_QSUB = "qsub";
+    private static final String COMMAND_TRACEJOB = "tracejob";
+    // qstat
+    private static final String PARAMETER_XML = "-x";
     private static final String PARAMETER_FULL_STATUS = "-f";
     private static final String PARAMETER_QUEUE = "-Q";
+    // tracejob
+    private static final String PARAMETER_NUMBER_OF_DAYS = "-n";
     
     private static final NodeXmlParser NODE_XML_PARSER = new NodeXmlParser();
     private static final QstatQueuesParser QSTAT_QUEUES_PARSER = new QstatQueuesParser();
