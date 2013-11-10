@@ -274,6 +274,7 @@ public class PBS {
      * <p>
      * Equivalent to qsub [param]
      * @param input job input file
+     * @return job id
      */
     public static String qsub(String input) {
     	final CommandLine cmdLine = new CommandLine(COMMAND_QSUB);
