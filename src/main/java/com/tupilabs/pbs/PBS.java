@@ -275,7 +275,7 @@ public class PBS {
      * Equivalent to qsub [param]
      * @param input job input file
      */
-    public static void qsub(String input) {
+    public static String qsub(String input) {
     	final CommandLine cmdLine = new CommandLine(COMMAND_QSUB);
         cmdLine.addArgument(input);
         
@@ -300,6 +300,9 @@ public class PBS {
         
         if (exitValue != 0)
         	throw new PBSException("Failed to submit job script " + input + ". Error output: " + err.toString());
+        
+        String jobId = out.toString();
+        return jobId.trim();
     }
     
     /**
