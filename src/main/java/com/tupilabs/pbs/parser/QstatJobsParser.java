@@ -77,7 +77,7 @@ public class QstatJobsParser implements Parser<String, List<Job>> {
                         jobs.add(job);
                     } 
                     job = new Job();
-                    final String id = matcher.group(1);
+                    final String id = matcher.group(1).trim();
                     job.setId(id);
                 } else if(StringUtils.isNotBlank(line)) {
                     String[] temp = Utils.splitFirst(line, CHAR_EQUALS);
