@@ -53,6 +53,17 @@
 			<timezone>-3</timezone>
 			<url>http://www.kinoshita.eti.br</url>
 		</developer>
+		<developer>
+			<id>liccini</id>
+			<email>joseph.liccini@ufl.edu</email>
+			<name>Joseph Liccini</name>
+			<organization>RAPiD Genomics</organization>
+			<organizationUrl>http://www.rapid-genomics.com</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>-5</timezone>
+		</developer>
 	</developers>
 
 	<dependencies>
