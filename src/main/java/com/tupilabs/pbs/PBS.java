@@ -236,7 +236,43 @@ public class PBS {
         
         return (jobs == null ? new ArrayList<Job>(0) : jobs);
     }
-    
+
+    public static List<Job> qstatArrayJob(String name) {
+        final CommandLine cmdLine = new CommandLine(COMMAND_QSTAT);
+        cmdLine.addArgument(PARAMETER_FULL_STATUS);
+	cmdLine.addArgument(PARAMETER_ARRAY_JOB_STATUS);
+        if(StringUtils.isNotBlank(name)) {
+            cmdLine.addArgument(name);
+        }
+        
+        final OutputStream out = new ByteArrayOutputStream();
+        final OutputStream err = new ByteArrayOutputStream();
+        
+        DefaultExecuteResultHandler resultHandler;
+        try {
+            resultHandler = execute(cmdLine, out, err);
+            resultHandler.waitFor(DEFAULT_TIMEOUT);
+        } catch (ExecuteException e) {
+            throw new PBSException("Failed to execute qstat command: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new PBSException("Failed to execute qstat command: " + e.getMessage(), e);
+        } catch (InterruptedException e) {
+            throw new PBSException("Failed to execute qstat command: " + e.getMessage(), e);
+        }
+        
+        final int exitValue = resultHandler.getExitValue();
+        LOGGER.info("qstat exit value: " + exitValue);
+        
+        final List<Job> jobs;
+        try {
+            jobs = QSTAT_JOBS_PARSER.parse(out.toString());
+        } catch (ParseException pe) {
+            throw new PBSException("Failed to parse qstat jobs output: " + pe.getMessage(), pe);
+        }
+        
+        return (jobs == null ? new ArrayList<Job>(0) : jobs);
+    }
+
     /**
      * PBS qdel command. 
      * <p>
@@ -376,6 +412,7 @@ public class PBS {
     // qstat
     private static final String PARAMETER_XML = "-x";
     private static final String PARAMETER_FULL_STATUS = "-f";
+    private static final String PARAMETER_ARRAY_JOB_STATUS = "-t";
     private static final String PARAMETER_QUEUE = "-Q";
     // tracejob
     private static final String PARAMETER_NUMBER_OF_DAYS = "-n";
