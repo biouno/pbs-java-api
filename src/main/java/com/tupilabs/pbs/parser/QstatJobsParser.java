@@ -63,6 +63,7 @@ public class QstatJobsParser implements Parser<String, List<Job>> {
     public List<Job> parse(String text) throws ParseException {
         final List<Job> jobs;
         if(StringUtils.isNotBlank(text)) {
+        	text = StringUtils.replace(text, "\n\t", "");
             jobs = new LinkedList<Job>();
             String separator = "\n";
             if(text.indexOf("\r\n") > 0) {

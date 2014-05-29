@@ -237,6 +237,13 @@ public class PBS {
         return (jobs == null ? new ArrayList<Job>(0) : jobs);
     }
 
+    /**
+     * PBS qstat command for Array Jobs 
+     * <p>
+     * Equivalent to qstat -f -t [param]
+     * @param name job name
+     * @return list of jobs
+     */
     public static List<Job> qstatArrayJob(String name) {
         final CommandLine cmdLine = new CommandLine(COMMAND_QSTAT);
         cmdLine.addArgument(PARAMETER_FULL_STATUS);
@@ -332,8 +339,8 @@ public class PBS {
         }
         
         final int exitValue = resultHandler.getExitValue();
-        LOGGER.info("qdel exit value: " + exitValue);
-        LOGGER.fine("qdel output: " + out.toString());
+        LOGGER.info("qsub exit value: " + exitValue);
+        LOGGER.fine("qsub output: " + out.toString());
         
         if (exitValue != 0)
         	throw new PBSException("Failed to submit job script " + input + ". Error output: " + err.toString());
@@ -343,6 +350,135 @@ public class PBS {
     }
     
     /**
+     * PBS qsub command for an Array Job with Specific PBS_ARRAY_IDs to submit 
+     * <p>
+     * Equivalent to qsub -t 1,2,3 [param]
+     * @param input job input file
+     * @param list of specified PBS indices
+     * @return job id of array job
+     */
+    public static String qsubArrayJob(String input, List<Integer> pbsArrayIDs) {
+    	final CommandLine cmdLine = new CommandLine(COMMAND_QSUB);
+    	cmdLine.addArgument(PARAMETER_ARRAY_JOB_STATUS);
+    	String listArgument = StringUtils.join(pbsArrayIDs, ",");
+    	cmdLine.addArgument(listArgument);
+        cmdLine.addArgument(input);
+        
+        final OutputStream out = new ByteArrayOutputStream();
+        final OutputStream err = new ByteArrayOutputStream();
+        
+        DefaultExecuteResultHandler resultHandler;
+        try {
+            resultHandler = execute(cmdLine, out, err);
+            resultHandler.waitFor(DEFAULT_TIMEOUT);
+        } catch (ExecuteException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        } catch (InterruptedException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        }
+        
+        final int exitValue = resultHandler.getExitValue();
+        LOGGER.info("qsub exit value: " + exitValue);
+        LOGGER.fine("qsub output: " + out.toString());
+        
+        if (exitValue != 0)
+        	throw new PBSException("Failed to submit job script " + input + ". Error output: " + err.toString());
+        
+        String jobId = out.toString();
+        return jobId.trim();
+    }
+    
+    /**
+     * PBS qsub command for an Array Job with Specific PBS_ARRAY_IDs to submit 
+     * <p>
+     * Equivalent to qsub -t 5-20 [param]
+     * @param input job input file
+     * @param beginning of index range
+     * @param end of index range
+     * @return job id of array job
+     */
+    public static String qsubArrayJob(String input, int beginIndex, int endIndex) {
+    	final CommandLine cmdLine = new CommandLine(COMMAND_QSUB);
+    	cmdLine.addArgument(PARAMETER_ARRAY_JOB_STATUS);
+    	String rangeArgument = beginIndex + "-" + endIndex;
+    	cmdLine.addArgument(rangeArgument);
+        cmdLine.addArgument(input);
+        
+        final OutputStream out = new ByteArrayOutputStream();
+        final OutputStream err = new ByteArrayOutputStream();
+        
+        DefaultExecuteResultHandler resultHandler;
+        try {
+            resultHandler = execute(cmdLine, out, err);
+            resultHandler.waitFor(DEFAULT_TIMEOUT);
+        } catch (ExecuteException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        } catch (InterruptedException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        }
+        
+        final int exitValue = resultHandler.getExitValue();
+        LOGGER.info("qsub exit value: " + exitValue);
+        LOGGER.fine("qsub output: " + out.toString());
+        
+        if (exitValue != 0)
+        	throw new PBSException("Failed to submit job script " + input + ". Error output: " + err.toString());
+        
+        String jobId = out.toString();
+        return jobId.trim();
+    }
+ 
+    /**
+     * PBS qsub command for an Array Job with Specific PBS_ARRAY_IDs to submit 
+     * AND a range to submit
+     * <p>
+     * Equivalent to qsub -t 1,2,3,5-20 [param]
+     * @param input job input file
+     * @param list of specified indices
+     * @param beginning of index range
+     * @param end of index range
+     * @return job id of array job
+     */
+    public static String qsubArrayJob(String input, List<Integer> pbsArrayIDs, int beginIndex, int endIndex) {
+    	final CommandLine cmdLine = new CommandLine(COMMAND_QSUB);
+    	cmdLine.addArgument(PARAMETER_ARRAY_JOB_STATUS);
+    	String rangeArgument = beginIndex + "-" + endIndex;
+    	String listArgument = StringUtils.join(pbsArrayIDs, ",");
+    	String combinedArgument = listArgument + "," + rangeArgument;
+    	cmdLine.addArgument(combinedArgument);
+        cmdLine.addArgument(input);
+        
+        final OutputStream out = new ByteArrayOutputStream();
+        final OutputStream err = new ByteArrayOutputStream();
+        
+        DefaultExecuteResultHandler resultHandler;
+        try {
+            resultHandler = execute(cmdLine, out, err);
+            resultHandler.waitFor(DEFAULT_TIMEOUT);
+        } catch (ExecuteException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        } catch (InterruptedException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        }
+        
+        final int exitValue = resultHandler.getExitValue();
+        LOGGER.info("qsub exit value: " + exitValue);
+        LOGGER.fine("qsub output: " + out.toString());
+        
+        if (exitValue != 0)
+        	throw new PBSException("Failed to submit job script " + input + ". Error output: " + err.toString());
+        
+        String jobId = out.toString();
+        return jobId.trim();
+    }
+
+	/**
      * PBS tracejob command.
      * <p>
      * Equivalent to tracejob -n [numberOfDays] [jobId]
@@ -402,7 +538,7 @@ public class PBS {
         return resultHandler;
     }
     
-    private static final Logger LOGGER = Logger.getLogger(PBS.class.getName());
+   private static final Logger LOGGER = Logger.getLogger(PBS.class.getName());
 
     private static final String COMMAND_QNODES = "qnodes";
     private static final String COMMAND_QSTAT = "qstat";
