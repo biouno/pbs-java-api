@@ -85,68 +85,68 @@ public class QstatJobsParser implements Parser<String, List<Job>> {
                     if(temp.length == 2) {
                         final String key = temp[0].trim().toLowerCase();
                         final String value = temp[1].trim();
-                        if("job_name".equals(key)) {
+                        if("job_name".equalsIgnoreCase(key)) {
                             job.setName(value);
-                        } else if("job_owner".equals(key)) {
+                        } else if("job_owner".equalsIgnoreCase(key)) {
                             job.setOwner(value);
                         } else if(key.startsWith("resources_used.")) {
                             job.getResourcesUsed().put(key, value);
-                        } else if("job_state".equals(key)) {
+                        } else if("job_state".equalsIgnoreCase(key)) {
                             job.setState(value);
-                        } else if("queue".equals(key)) {
+                        } else if("queue".equalsIgnoreCase(key)) {
                             job.setQueue(value);
-                        } else if("server".equals(key)) {
+                        } else if("server".equalsIgnoreCase(key)) {
                             job.setServer(value);
-                        } else if("checkpoint".equals(key)) {
+                        } else if("checkpoint".equalsIgnoreCase(key)) {
                             job.setCheckpoint(value);
-                        } else if("ctime".equals(key)) {
+                        } else if("ctime".equalsIgnoreCase(key)) {
                             job.setCtime(value);
-                        } else if("error_path".equals(key)) {
+                        } else if("error_path".equalsIgnoreCase(key)) {
                             job.setErrorPath(value);
-                        } else if("exec_host".equals(key)) {
+                        } else if("exec_host".equalsIgnoreCase(key)) {
                             job.setExecHost(value);
-                        } else if("exec_port".equals(key)) {
+                        } else if("exec_port".equalsIgnoreCase(key)) {
                             try {
                                 job.setExecPort(Integer.parseInt(value));
                             } catch (NumberFormatException nfe) {
                                 LOGGER.log(Level.WARNING, "Failed parsing job exec port: " + nfe.getMessage(), nfe);
                                 job.setExecPort(-1);
                             }
-                        } else if("hold_types".equals(key)) {
+                        } else if("hold_types".equalsIgnoreCase(key)) {
                             job.setHoldTypes(value);
-                        } else if("join_path".equals(key)) {
+                        } else if("join_path".equalsIgnoreCase(key)) {
                             job.setJoinPath(value);
-                        } else if("keep_files".equals(key)) {
+                        } else if("keep_files".equalsIgnoreCase(key)) {
                             job.setKeepFiles(value);
-                        } else if("mail_points".equals(key)) {
+                        } else if("mail_points".equalsIgnoreCase(key)) {
                             job.setMailPoints(value);
-                        } else if("mail_users".equals(key)) {
+                        } else if("mail_users".equalsIgnoreCase(key)) {
                             job.setMailUsers(value);
-                        } else if("mtime".equals(key)) {
+                        } else if("mtime".equalsIgnoreCase(key)) {
                             job.setMtime(value);
-                        } else if("output_path".equals(key)) {
+                        } else if("output_path".equalsIgnoreCase(key)) {
                             job.setOutputPath(value);
-                        } else if("priority".equals(key)) {
+                        } else if("priority".equalsIgnoreCase(key)) {
                             try {
                                 job.setPriority(Integer.parseInt(value));
                             } catch (NumberFormatException nfe) {
                                 LOGGER.log(Level.WARNING, "Failed parsing job priority: " + nfe.getMessage(), nfe);
                                 job.setPriority(-1);
                             }
-                        } else if("qtime".equals(key)) {
+                        } else if("qtime".equalsIgnoreCase(key)) {
                             job.setQtime(value);
-                        } else if("rerunable".equals(key)) {
+                        } else if("rerunable".equalsIgnoreCase(key)) {
                             job.setRerunable(Boolean.parseBoolean(value));
                         } else if(key.startsWith("resource_list.")) {
                             job.getResourceList().put(key, value);
-                        } else if("session_id".equals(key)) {
+                        } else if("session_id".equalsIgnoreCase(key)) {
                             try {
                                 job.setSessionId(Integer.parseInt(value));
                             } catch (NumberFormatException nfe) {
                                 LOGGER.log(Level.WARNING, "Failed parsing job session id: " + nfe.getMessage(), nfe);
                                 job.setSessionId(-1);
                             }
-                        } else if("substate".equals(key)) {
+                        } else if("substate".equalsIgnoreCase(key)) {
                             try {
                                 job.setSubstate(Integer.parseInt(value));
                             } catch (NumberFormatException nfe) {
@@ -155,48 +155,48 @@ public class QstatJobsParser implements Parser<String, List<Job>> {
                             }
                         } else if(key.startsWith("variable_list")) {
                            job.getVariableList().put(key, value);
-                        } else if("etime".equals(key)) {
+                        } else if("etime".equalsIgnoreCase(key)) {
                             job.setEtime(value);
-                        } else if("euser".equals(key)) {
+                        } else if("euser".equalsIgnoreCase(key)) {
                             job.setEuser(value);
-                        } else if("egroup".equals(key)) {
+                        } else if("egroup".equalsIgnoreCase(key)) {
                             job.setEgroup(value);
-                        } else if("hashname".equals(key)) {
+                        } else if("hashname".equalsIgnoreCase(key)) {
                             job.setHashName(value);
-                        } else if("queue_rank".equals(key)) {
+                        } else if("queue_rank".equalsIgnoreCase(key)) {
                             try {
                                 job.setQueueRank(Integer.parseInt(value));
                             } catch (NumberFormatException nfe) {
                                 LOGGER.log(Level.WARNING, "Failed parsing job queue rank: " + nfe.getMessage(), nfe);
                                 job.setQueueRank(-1);
                             }
-                        } else if("queue_type".equals(key)) {
+                        } else if("queue_type".equalsIgnoreCase(key)) {
                             job.setQueueType(value);
-                        } else if("comment".equals(key)) {
+                        } else if("comment".equalsIgnoreCase(key)) {
                             job.setComment(value);
-                        } else if("submit_args".equals(key)) {
+                        } else if("submit_args".equalsIgnoreCase(key)) {
                             job.setSubmitArgs(value);
-                        } else if("submit_host".equals(key)) {
+                        } else if("submit_host".equalsIgnoreCase(key)) {
                             job.setSubmitHost(value);
-                        } else if("start_time".equals(key)) {
+                        } else if("start_time".equalsIgnoreCase(key)) {
                             job.setStartTime(value);
-                        } else if("start_count".equals(key)) {
+                        } else if("start_count".equalsIgnoreCase(key)) {
                             try {
                                 job.setStartCount(Integer.parseInt(value));
                             } catch (NumberFormatException nfe) {
                                 LOGGER.log(Level.WARNING, "Failed parsing job start count: " + nfe.getMessage(), nfe);
                                 job.setStartCount(-1);
                             }
-                        } else if("fault_tolerant".equals(key)) {
+                        } else if("fault_tolerant".equalsIgnoreCase(key)) {
                             job.setFaultTolerant(Boolean.parseBoolean(value));
-                        } else if("job_radix".equals(key)) {
+                        } else if("job_radix".equalsIgnoreCase(key)) {
                             try {
                                 job.setRadix(Integer.parseInt(value));
                             } catch (NumberFormatException nfe) {
                                 LOGGER.log(Level.WARNING, "Failed parsing job radix: " + nfe.getMessage(), nfe);
                                 job.setRadix(-1);
                             }
-                        } else if("walltime.remaining".equals(key)) { 
+                        } else if("walltime.remaining".equalsIgnoreCase(key)) { 
                             try {
                                 job.setWalltimeRemaining(Long.parseLong(value));
                             } catch (NumberFormatException nfe) {

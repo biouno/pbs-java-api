@@ -349,6 +349,47 @@ public class PBS {
         return jobId.trim();
     }
     
+/**
+     * PBS qsub command with arguments resource overrides 
+     * <p>
+     * Equivalent to qsub [param] -l [resource_name=value,resource_name=value]]
+     * @param input job input file
+     * @param variable number of resources to override
+     * @return job id
+     */
+    public static String qsub(String input, String... resourceOverrides) {
+    	final CommandLine cmdLine = new CommandLine(COMMAND_QSUB);
+    	cmdLine.addArgument(PARAMETER_RESOURCE_OVERRIDE_STATUS);
+    	String resourceOverrideArgument = StringUtils.join(resourceOverrides, ",");
+    	cmdLine.addArgument(resourceOverrideArgument);
+        cmdLine.addArgument(input);
+        
+        final OutputStream out = new ByteArrayOutputStream();
+        final OutputStream err = new ByteArrayOutputStream();
+        
+        DefaultExecuteResultHandler resultHandler;
+        try {
+            resultHandler = execute(cmdLine, out, err);
+            resultHandler.waitFor(DEFAULT_TIMEOUT);
+        } catch (ExecuteException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        } catch (InterruptedException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        }
+        
+        final int exitValue = resultHandler.getExitValue();
+        LOGGER.info("qsub exit value: " + exitValue);
+        LOGGER.fine("qsub output: " + out.toString());
+        
+        if (exitValue != 0)
+        	throw new PBSException("Failed to submit job script " + input + ". Error output: " + err.toString());
+        
+        String jobId = out.toString();
+        return jobId.trim();
+    }
+
     /**
      * PBS qsub command for an Array Job with Specific PBS_ARRAY_IDs to submit 
      * <p>
@@ -362,6 +403,51 @@ public class PBS {
     	cmdLine.addArgument(PARAMETER_ARRAY_JOB_STATUS);
     	String listArgument = StringUtils.join(pbsArrayIDs, ",");
     	cmdLine.addArgument(listArgument);
+        cmdLine.addArgument(input);
+        
+        final OutputStream out = new ByteArrayOutputStream();
+        final OutputStream err = new ByteArrayOutputStream();
+        
+        DefaultExecuteResultHandler resultHandler;
+        try {
+            resultHandler = execute(cmdLine, out, err);
+            resultHandler.waitFor(DEFAULT_TIMEOUT);
+        } catch (ExecuteException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        } catch (InterruptedException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        }
+        
+        final int exitValue = resultHandler.getExitValue();
+        LOGGER.info("qsub exit value: " + exitValue);
+        LOGGER.fine("qsub output: " + out.toString());
+        
+        if (exitValue != 0)
+        	throw new PBSException("Failed to submit job script " + input + ". Error output: " + err.toString());
+        
+        String jobId = out.toString();
+        return jobId.trim();
+    }
+    
+    /**
+     * PBS qsub command for an Array Job with Specific PBS_ARRAY_IDs to submit, and resource overrides
+     * <p>
+     * Equivalent to qsub -t 1,2,3 -l [resource_name=value,resource_name=value] [param]
+     * @param input job input file
+     * @param list of specified PBS indices
+     * @param list of resource overrides
+     * @return job id of array job
+     */
+    public static String qsubArrayJob(String input, List<Integer> pbsArrayIDs, String... resourceOverrides) {
+    	final CommandLine cmdLine = new CommandLine(COMMAND_QSUB);
+    	cmdLine.addArgument(PARAMETER_ARRAY_JOB_STATUS);
+    	String listArgument = StringUtils.join(pbsArrayIDs, ",");
+    	cmdLine.addArgument(listArgument);
+    	cmdLine.addArgument(PARAMETER_RESOURCE_OVERRIDE_STATUS);
+    	String resourceOverrideArgument = StringUtils.join(resourceOverrides, ",");
+    	cmdLine.addArgument(resourceOverrideArgument);
         cmdLine.addArgument(input);
         
         final OutputStream out = new ByteArrayOutputStream();
@@ -549,6 +635,7 @@ public class PBS {
     private static final String PARAMETER_XML = "-x";
     private static final String PARAMETER_FULL_STATUS = "-f";
     private static final String PARAMETER_ARRAY_JOB_STATUS = "-t";
+    private static final String PARAMETER_RESOURCE_OVERRIDE_STATUS = "-l";
     private static final String PARAMETER_QUEUE = "-Q";
     // tracejob
     private static final String PARAMETER_NUMBER_OF_DAYS = "-n";
