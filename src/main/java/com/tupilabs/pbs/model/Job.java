@@ -171,6 +171,8 @@ public class Job
     private String startTime;
 
     private int startCount;
+    
+    private int jobArrayId;
 
     /**
      * Whether the job is fault-tolerant or not.
@@ -827,5 +829,15 @@ public class Job
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
+
+	public int getJobArrayId()
+	{
+		return jobArrayId;
+	}
+
+	public void setJobArrayId(int jobArrayId)
+	{
+		this.jobArrayId = jobArrayId;
+	}
 
 }
