@@ -189,6 +189,8 @@ public class QstatJobsParser implements Parser<String, List<Job>> {
                             }
                         } else if("fault_tolerant".equalsIgnoreCase(key)) {
                             job.setFaultTolerant(Boolean.parseBoolean(value));
+                        } else if("job_array_id".equalsIgnoreCase(key)) {
+                            job.setJobArrayId(Integer.parseInt(value));
                         } else if("job_radix".equalsIgnoreCase(key)) {
                             try {
                                 job.setRadix(Integer.parseInt(value));
