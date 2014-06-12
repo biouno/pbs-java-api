@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.apache.commons.exec.CommandLine;
@@ -89,7 +90,7 @@ public class PBS {
         
         DefaultExecuteResultHandler resultHandler;
         try {
-            resultHandler = execute(cmdLine, out, err);
+            resultHandler = execute(cmdLine, null, out, err);
             resultHandler.waitFor(DEFAULT_TIMEOUT);
         } catch (ExecuteException e) {
             throw new PBSException("Failed to execute qnodes command: " + e.getMessage(), e);
@@ -142,7 +143,7 @@ public class PBS {
         
         DefaultExecuteResultHandler resultHandler;
         try {
-            resultHandler = execute(cmdLine, out, err);
+            resultHandler = execute(cmdLine, null, out, err);
             resultHandler.waitFor(DEFAULT_TIMEOUT);
         } catch (ExecuteException e) {
             throw new PBSException("Failed to execute qstat command: " + e.getMessage(), e);
@@ -214,7 +215,7 @@ public class PBS {
         
         DefaultExecuteResultHandler resultHandler;
         try {
-            resultHandler = execute(cmdLine, out, err);
+            resultHandler = execute(cmdLine, null, out, err);
             resultHandler.waitFor(DEFAULT_TIMEOUT);
         } catch (ExecuteException e) {
             throw new PBSException("Failed to execute qstat command: " + e.getMessage(), e);
@@ -295,7 +296,7 @@ public class PBS {
         
         DefaultExecuteResultHandler resultHandler;
         try {
-            resultHandler = execute(cmdLine, out, err);
+            resultHandler = execute(cmdLine, null, out, err);
             resultHandler.waitFor(DEFAULT_TIMEOUT);
         } catch (ExecuteException e) {
             throw new PBSException("Failed to execute qdel command: " + e.getMessage(), e);
@@ -328,7 +329,7 @@ public class PBS {
         
         DefaultExecuteResultHandler resultHandler;
         try {
-            resultHandler = execute(cmdLine, out, err);
+            resultHandler = execute(cmdLine, null, out, err);
             resultHandler.waitFor(DEFAULT_TIMEOUT);
         } catch (ExecuteException e) {
             throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
@@ -426,6 +427,46 @@ public class PBS {
         
         if (exitValue != 0)
         	throw new PBSException("Failed to submit job script " + input + ". Error output: " + err.toString());
+        
+        String jobId = out.toString();
+        return jobId.trim();
+    }
+
+    /**
+     * PBS qsub command. 
+     * <p>
+     * Equivalent to qsub [param]
+     * @param input job input file
+     * @return job id
+     */
+    public static String qsub(String[] inputs, Map<String, String> environment) {
+    	final CommandLine cmdLine = new CommandLine(COMMAND_QSUB);
+        for(int i=0; i < inputs.length; ++i) {
+            cmdLine.addArgument(inputs[i]);
+        }
+        
+        final OutputStream out = new ByteArrayOutputStream();
+        final OutputStream err = new ByteArrayOutputStream();
+        
+        DefaultExecuteResultHandler resultHandler;
+        try {
+            resultHandler = execute(cmdLine, environment, out, err);
+            resultHandler.waitFor(DEFAULT_TIMEOUT);
+        } catch (ExecuteException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        } catch (InterruptedException e) {
+            throw new PBSException("Failed to execute qsub command: " + e.getMessage(), e);
+        }
+        
+        final int exitValue = resultHandler.getExitValue();
+        LOGGER.info("qsub exit value: " + exitValue);
+        LOGGER.fine("qsub output: " + out.toString());
+        
+        if (exitValue != 0) {
+            throw new PBSException("Failed to submit job script with command line '" + cmdLine.toString() + "'. Error output: " + err.toString());
+        }
         
         String jobId = out.toString();
         return jobId.trim();
@@ -583,7 +624,7 @@ public class PBS {
         
         DefaultExecuteResultHandler resultHandler;
         try {
-            resultHandler = execute(cmdLine, out, err);
+            resultHandler = execute(cmdLine, null, out, err);
             resultHandler.waitFor(DEFAULT_TIMEOUT);
         } catch (ExecuteException e) {
             throw new PBSException("Failed to execute tracejob command: " + e.getMessage(), e);
@@ -614,13 +655,18 @@ public class PBS {
      * @throws ExecuteException
      * @throws IOException
      */
-    static DefaultExecuteResultHandler execute(CommandLine cmdLine, OutputStream out, OutputStream err) throws ExecuteException, IOException {
+    static DefaultExecuteResultHandler execute(CommandLine cmdLine, Map<String, String> environment,
+                                               OutputStream out, OutputStream err) throws ExecuteException, IOException {
         DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
         ExecuteStreamHandler streamHandler = new PumpStreamHandler(out, err);
         DefaultExecutor executor = new DefaultExecutor();
         executor.setExitValue(0);
         executor.setStreamHandler(streamHandler);
-        executor.execute(cmdLine, resultHandler);
+        if(environment != null) {
+            executor.execute(cmdLine, environment, resultHandler);
+        } else {
+            executor.execute(cmdLine, resultHandler);
+        }
         return resultHandler;
     }
     
