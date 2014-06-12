@@ -27,6 +27,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -649,6 +650,19 @@ public class PBS {
     /**
      * Executes a PBS command.
      * @param cmdLine command
+     * @param out output stream
+     * @param err err stream
+     * @return execute handler
+     * @throws ExecuteException
+     * @throws IOException
+     */
+    static DefaultExecuteResultHandler execute(CommandLine cmdLine, OutputStream out, OutputStream err) throws ExecuteException, IOException {
+    	return execute(cmdLine, Collections.<String, String>emptyMap(), out, err);
+    }
+    /**
+     * Executes a PBS command.
+     * @param cmdLine command
+     * @param environment env vars
      * @param out output stream
      * @param err err stream
      * @return execute handler
