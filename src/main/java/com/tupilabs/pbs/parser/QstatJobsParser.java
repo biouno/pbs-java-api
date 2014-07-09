@@ -106,12 +106,7 @@ public class QstatJobsParser implements Parser<String, List<Job>> {
                         } else if("exec_host".equalsIgnoreCase(key)) {
                             job.setExecHost(value);
                         } else if("exec_port".equalsIgnoreCase(key)) {
-                            try {
-                                job.setExecPort(Integer.parseInt(value));
-                            } catch (NumberFormatException nfe) {
-                                LOGGER.log(Level.WARNING, "Failed parsing job exec port: " + nfe.getMessage(), nfe);
-                                job.setExecPort(-1);
-                            }
+                            job.setExecPort(value);
                         } else if("hold_types".equalsIgnoreCase(key)) {
                             job.setHoldTypes(value);
                         } else if("join_path".equalsIgnoreCase(key)) {

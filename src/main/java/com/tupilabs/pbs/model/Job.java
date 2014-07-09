@@ -41,9 +41,9 @@ import org.apache.commons.lang.builder.ToStringStyle;
 public class Job
     implements Serializable {
 
-    private static final long serialVersionUID = 3688638797366941406L;
+	private static final long serialVersionUID = -8705011705872768446L;
 
-    /**
+	/**
      * Number used to index a job in a queue (used by qnodes).
      */
     private int queueIndex;
@@ -92,7 +92,7 @@ public class Job
 
     private String execHost;
 
-    private int execPort;
+    private String execPort;
 
     private String holdTypes;
 
@@ -377,14 +377,14 @@ public class Job
     /**
      * @return the execPort
      */
-    public int getExecPort() {
+    public String getExecPort() {
         return execPort;
     }
 
     /**
      * @param execPort the execPort to set
      */
-    public void setExecPort(int execPort) {
+    public void setExecPort(String execPort) {
         this.execPort = execPort;
     }
 
