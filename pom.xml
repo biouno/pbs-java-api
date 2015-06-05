@@ -32,7 +32,7 @@
 		<developerConnection>scm:git:git@github.com:biouno/pbs-java-api.git</developerConnection>
 	</scm>
 	<issueManagement>
-		<url>https://github.com/biouno/pbs-java-apij/issues</url>
+		<url>https://github.com/biouno/pbs-java-api/issues</url>
 		<system>GitHub</system>
 	</issueManagement>
 	<ciManagement>
