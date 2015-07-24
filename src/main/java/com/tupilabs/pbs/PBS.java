@@ -606,18 +606,36 @@ public class PBS {
         return jobId.trim();
     }
 
+    /**
+     * <p>PBS tracejob command.</p>
+     *
+     * <p>Equivalent to tracejob -n [numberOfDays] [jobId]</p>
+     *
+     * @param jobId
+     * @param numberOfDays
+     * @return tracejob output
+     */
+    public static CommandOutput traceJob(String jobId, int numberOfDays) {
+    	return traceJob(jobId, numberOfDays, true /* quiet */);
+    }
+
 	/**
      * PBS tracejob command.
      * <p>
      * Equivalent to tracejob -n [numberOfDays] [jobId]
      * @param jobId
      * @param numberOfDays
+     * @param quiet
+     *
      * @return tracejob output
      */
-    public static CommandOutput traceJob(String jobId, int numberOfDays) {
+    public static CommandOutput traceJob(String jobId, int numberOfDays, boolean quiet) {
     	final CommandLine cmdLine = new CommandLine(COMMAND_TRACEJOB);
     	cmdLine.addArgument(PARAMETER_NUMBER_OF_DAYS);
     	cmdLine.addArgument(Integer.toString(numberOfDays));
+    	if (quiet) {
+    		cmdLine.addArgument(PARAMETER_QUIET_MODE);
+    	}
         cmdLine.addArgument(jobId);
         
         final OutputStream out = new ByteArrayOutputStream();
@@ -699,6 +717,7 @@ public class PBS {
     private static final String PARAMETER_QUEUE = "-Q";
     // tracejob
     private static final String PARAMETER_NUMBER_OF_DAYS = "-n";
+    private static final String PARAMETER_QUIET_MODE = "-q";
     
     private static final NodeXmlParser NODE_XML_PARSER = new NodeXmlParser();
     private static final QstatQueuesParser QSTAT_QUEUES_PARSER = new QstatQueuesParser();
