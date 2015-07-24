@@ -4,7 +4,7 @@
 
 	<groupId>com.tupilabs</groupId>
 	<artifactId>pbs-java-api</artifactId>
-	<version>0.10</version>
+	<version>0.11-SNAPSHOT</version>
 	<name>PBS Java API</name>
 	<description>An API written in Java for interfacing with PBS clusters</description>
 
@@ -30,7 +30,7 @@
 		<url>https://github.com/biouno/pbs-java-api</url>
 		<connection>scm:git:git://github.com/biouno/pbs-java-api.git</connection>
 		<developerConnection>scm:git:git@github.com:biouno/pbs-java-api.git</developerConnection>
-	  <tag>pbs-java-api-0.10</tag>
+	  <tag>HEAD</tag>
   </scm>
 	<issueManagement>
 		<url>https://github.com/biouno/pbs-java-api/issues</url>
