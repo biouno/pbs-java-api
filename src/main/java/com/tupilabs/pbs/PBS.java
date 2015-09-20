@@ -64,7 +64,7 @@ public class PBS {
      * Get information about the cluster nodes.
      *
      * @return list of nodes
-     * @throws PBSException
+     * @throws PBSException if an error communicating with the PBS occurs
      */
     public static List<Node> qnodes() {
         return qnodes(null);
@@ -77,7 +77,7 @@ public class PBS {
      *
      * @param name node name
      * @return list of nodes
-     * @throws PBSException
+     * @throws PBSException if an error communicating with the PBS occurs
      */
     public static List<Node> qnodes(String name) {
         final List<Node> nodes;
@@ -120,7 +120,6 @@ public class PBS {
      * <p>
      * Equivalent to qstat -Q -f [name]
      *
-     * @param name queue name
      * @return list of queues
      */
     public static List<Queue> qstatQueues() {
@@ -187,6 +186,7 @@ public class PBS {
      * <p>
      * Equivalent to qstat -f [queue_name]
      *
+     * @param queue PBS {@link Queue}
      * @return list of jobs
      */
     public static List<Job> qstat(Queue queue) {
@@ -198,6 +198,7 @@ public class PBS {
      * <p>
      * Equivalent to qstat -f [job_name]
      *
+     * @param job the PBS Job
      * @return list of jobs
      */
     public static List<Job> qstat(Job job) {
@@ -296,7 +297,7 @@ public class PBS {
      * <p>
      * Equivalent to qdel [param]
      *
-     * @param name jobId job id
+     * @param jobId job id
      */
     public static void qdel(String jobId) {
         final CommandLine cmdLine = new CommandLine(COMMAND_QDEL);
@@ -368,7 +369,7 @@ public class PBS {
      * Equivalent to qsub [param] -l [resource_name=value,resource_name=value]]
      *
      * @param input job input file
-     * @param variable number of resources to override
+     * @param resourceOverrides variable number of resources to override
      * @return job id
      */
     public static String qsub(String input, String... resourceOverrides) {
@@ -410,7 +411,7 @@ public class PBS {
      * Equivalent to qsub -t 1,2,3 [param]
      *
      * @param input job input file
-     * @param list of specified PBS indices
+     * @param pbsArrayIDs list of specified PBS indices
      * @return job id of array job
      */
     public static String qsubArrayJob(String input, List<Integer> pbsArrayIDs) {
@@ -451,7 +452,8 @@ public class PBS {
      * <p>
      * Equivalent to qsub [param]
      *
-     * @param input job input file
+     * @param inputs job input file
+     * @param environment environment variables
      * @return job id
      */
     public static String qsub(String[] inputs, Map<String, String> environment) {
@@ -494,8 +496,8 @@ public class PBS {
      * Equivalent to qsub -t 1,2,3 -l [resource_name=value,resource_name=value] [param]
      *
      * @param input job input file
-     * @param list of specified PBS indices
-     * @param list of resource overrides
+     * @param pbsArrayIDs of specified PBS indices
+     * @param resourceOverrides list of resource overrides
      * @return job id of array job
      */
     public static String qsubArrayJob(String input, List<Integer> pbsArrayIDs, String... resourceOverrides) {
@@ -540,8 +542,8 @@ public class PBS {
      * Equivalent to qsub -t 5-20 [param]
      *
      * @param input job input file
-     * @param beginning of index range
-     * @param end of index range
+     * @param beginIndex beginning of index range
+     * @param endIndex end of index range
      * @return job id of array job
      */
     public static String qsubArrayJob(String input, int beginIndex, int endIndex) {
@@ -583,9 +585,9 @@ public class PBS {
      * Equivalent to qsub -t 1,2,3,5-20 [param]
      *
      * @param input job input file
-     * @param list of specified indices
-     * @param beginning of index range
-     * @param end of index range
+     * @param pbsArrayIDs list of specified indices
+     * @param beginIndex beginning of index range
+     * @param endIndex end of index range
      * @return job id of array job
      */
     public static String qsubArrayJob(String input, List<Integer> pbsArrayIDs, int beginIndex, int endIndex) {
@@ -631,8 +633,8 @@ public class PBS {
      * Equivalent to tracejob -n [numberOfDays] [jobId]
      * </p>
      *
-     * @param jobId
-     * @param numberOfDays
+     * @param jobId job id
+     * @param numberOfDays number of days to look for the job
      * @return tracejob output
      */
     public static CommandOutput traceJob(String jobId, int numberOfDays) {
@@ -644,9 +646,9 @@ public class PBS {
      * <p>
      * Equivalent to tracejob -n [numberOfDays] [jobId]
      *
-     * @param jobId
-     * @param numberOfDays
-     * @param quiet
+     * @param jobId job id
+     * @param numberOfDays number of days to look for the job
+     * @param quiet quiet mode flag
      * @return tracejob output
      */
     public static CommandOutput traceJob(String jobId, int numberOfDays, boolean quiet) {
@@ -706,8 +708,8 @@ public class PBS {
      * @param out output stream
      * @param err err stream
      * @return execute handler
-     * @throws ExecuteException
-     * @throws IOException
+     * @throws ExecuteException if there is an error executing a command
+     * @throws IOException in case of an IO problem
      */
     static DefaultExecuteResultHandler execute(CommandLine cmdLine, Map<String, String> environment, OutputStream out,
             OutputStream err) throws ExecuteException, IOException {

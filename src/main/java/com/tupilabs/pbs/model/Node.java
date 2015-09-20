@@ -58,10 +58,10 @@ public class Node implements Serializable {
     private final List<Job> jobs;
 
     /**
-     * @param name
-     * @param numberOfProcessors
-     * @param nodeType
-     * @param state
+     * @param name node name
+     * @param numberOfProcessors number of processors available in this node
+     * @param nodeType node type
+     * @param state current {@link Queue} state
      */
     public Node(String name, int numberOfProcessors, String nodeType, QueueState state) {
         super();

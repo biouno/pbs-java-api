@@ -81,15 +81,15 @@ public class Queue implements Serializable {
     /**
      * Constructor with args.
      *
-     * @param name
-     * @param queueType
-     * @param priority
-     * @param totalJobs
-     * @param stateCount
-     * @param mtime
-     * @param maxUserRun
-     * @param enabled
-     * @param started
+     * @param name name
+     * @param queueType queye type
+     * @param priority queue priority
+     * @param totalJobs total of jobs
+     * @param stateCount state count
+     * @param mtime mtime
+     * @param maxUserRun maximum user run
+     * @param enabled enabled flag
+     * @param started started flag
      */
     public Queue(String name, String queueType, int priority, int totalJobs, String mtime, String stateCount,
             int maxUserRun, boolean enabled, boolean started) {

@@ -40,22 +40,28 @@ public class PBSException extends RuntimeException {
     }
 
     /**
-     * @param message
+     * Constructor with message.
+     *
+     * @param message exception message
      */
     public PBSException(String message) {
         super(message);
     }
 
     /**
-     * @param cause
+     * Constructor with cause.
+     *
+     * @param cause exception cause
      */
     public PBSException(Throwable cause) {
         super(cause);
     }
 
     /**
-     * @param message
-     * @param cause
+     * Constructor with message and cause.
+     *
+     * @param message exception message
+     * @param cause exception cause
      */
     public PBSException(String message, Throwable cause) {
         super(message, cause);
