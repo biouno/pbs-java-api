@@ -4,7 +4,68 @@ A simple Java API for interfacing with a PBS cluster.
 
 ## Examples
 
+Given the following PBS script from the agaveapi/torque repository.
 
+```
+#!/bin/bash
+#PBS -l walltime=00:1:00
+#PBS -l nice=19
+#PBS -q debug
+
+date
+hostname
+sleep 5
+date
+```
+
+### qsub
+
+You can submit to a PBS server with the following code.
+
+```
+    String scriptLocation = PBS001.class.getResource("/torque.submit").getFile();
+    String jobId = PBS.qsub(scriptLocation);
+    System.out.println(String.format("Job ID %s", jobId));
+```
+
+Which would be equivalent to `qsub /${HOME}/workspace/project/torque.submit`. The returned output is probably similar to "0.localhost", with the job id and the node name.
+
+### tracejob
+
+Or you could query the server for information about the job.
+
+```
+    CommandOutput co = PBS.traceJob("0", 30);
+    System.out.println(co.getOutput());
+```
+
+Which is similar to tracejob 0, and will probably return something similar to:
+
+```
+[root@localhost 5.0.0]# tracejob 0
+/var/spool/torque/server_logs/20150920: No such file or directory
+/var/spool/torque/mom_logs/20150920: No such file or directory
+/var/spool/torque/sched_logs/20150920: No such file or directory
+
+Job: 0.localhost
+
+09/20/2015 10:11:55  A    queue=debug
+09/20/2015 10:11:55  A    user=testuser group=testuser jobname=torque.submit
+                          queue=debug ctime=1442740315 qtime=1442740315
+                          etime=1442740315 start=1442740315
+                          owner=testuser@localhost exec_host=localhost/0
+                          Resource_List.nice=19 Resource_List.walltime=00:01:00
+                          
+09/20/2015 10:12:00  A    user=testuser group=testuser jobname=torque.submit
+                          queue=debug ctime=1442740315 qtime=1442740315
+                          etime=1442740315 start=1442740315
+                          owner=testuser@localhost exec_host=localhost/0
+                          Resource_List.nice=19 Resource_List.walltime=00:01:00
+                          session=235 end=1442740320 Exit_status=0
+                          resources_used.cput=00:00:00 resources_used.mem=0kb
+                          resources_used.vmem=0kb
+                          resources_used.walltime=00:00:05
+```
 
 ## API JavaDocs
 
@@ -20,8 +81,22 @@ You can use Docker to create a container running Linux and a Torque PBS server w
 
 ```
 docker run -d -h docker.example.com \
--p 10022:22 \ # SSHD, SFTP
---privileged \ # run in privileged mode
+-p 10022:22 \
+--privileged \
+--name torque \
+agaveapi/torque
+```
+
+Or to expose the PBS ports.
+
+```
+docker run -d -h docker.example.com \
+-p 10022:22 \
+-p 15001:15001 \
+-p 15002:15002 \
+-p 15003:15003 \
+-p 15004:15004 \
+--privileged \
 --name torque \
 agaveapi/torque
 ```

@@ -364,9 +364,13 @@ public class PBS {
     }
 
     /**
+     * <p>
      * PBS qsub command with arguments resource overrides
+     * </p>
+     *
      * <p>
      * Equivalent to qsub [param] -l [resource_name=value,resource_name=value]]
+     * </p>
      *
      * @param input job input file
      * @param resourceOverrides variable number of resources to override
