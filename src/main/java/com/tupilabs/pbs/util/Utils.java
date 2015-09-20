@@ -2,17 +2,17 @@
  * The MIT License
  *
  * Copyright (c) 2012-2015 Bruno P. Kinoshita, BioUno
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,6 +27,7 @@ import java.util.Vector;
 
 /**
  * Utils class.
+ *
  * @author Bruno P. Kinoshita
  * @since 0.1
  */
@@ -35,19 +36,18 @@ public final class Utils {
     /**
      * Hidden constructor of the utility class.
      */
-    private Utils() {};
-    
+    private Utils() {
+    };
+
     /**
-     * Split the source into two strings at the first occurrence of the splitter
-     * Subsequent occurrences are not treated specially, and may be part of the
-     * second string.
-     * 
+     * Split the source into two strings at the first occurrence of the splitter Subsequent occurrences are not treated
+     * specially, and may be part of the second string.
+     *
      * @author http://www.java2s.com/Code/Java/Data-Type/
      *         SplitthesourceintotwostringsatthefirstoccurrenceofthesplitterSubsequentoccurrencesarenottreatedspeciallyandmaybepartofthesecondstring
      *         .htm
      * @param source The string to split
-     * @param splitter The string that forms the boundary between the two
-     *        strings returned.
+     * @param splitter The string that forms the boundary between the two strings returned.
      * @return An array of two strings split from source by splitter.
      */
     public static String[] splitFirst(String source, String splitter) {
@@ -69,7 +69,7 @@ public final class Utils {
         }
 
         // convert to array
-        return (String[]) rv.toArray(new String[rv.size()]);
+        return rv.toArray(new String[rv.size()]);
     }
 
 }

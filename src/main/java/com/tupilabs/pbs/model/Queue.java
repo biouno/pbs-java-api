@@ -2,17 +2,17 @@
  * The MIT License
  *
  * Copyright (c) 2012-2015 Bruno P. Kinoshita, BioUno
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -32,12 +32,11 @@ import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
  * A PBS queue.
- * 
+ *
  * @author Bruno P. Kinoshita
  * @since 0.1
  */
-public class Queue
-    implements Serializable {
+public class Queue implements Serializable {
 
     private static final long serialVersionUID = -577795360134584431L;
 
@@ -58,7 +57,7 @@ public class Queue
     private final Map<String, String> resourcesMin;
 
     private final Map<String, String> resourcesAssigned;
-    
+
     private final Map<String, String> resourcesDefault;
 
     private int maxUserRun = -1;
@@ -81,7 +80,7 @@ public class Queue
 
     /**
      * Constructor with args.
-     * 
+     *
      * @param name
      * @param queueType
      * @param priority
@@ -92,9 +91,8 @@ public class Queue
      * @param enabled
      * @param started
      */
-    public Queue(String name, String queueType, int priority, int totalJobs,
-                 String mtime, String stateCount, int maxUserRun,
-                 boolean enabled, boolean started) {
+    public Queue(String name, String queueType, int priority, int totalJobs, String mtime, String stateCount,
+            int maxUserRun, boolean enabled, boolean started) {
         super();
         this.name = name;
         this.queueType = queueType;
@@ -257,8 +255,7 @@ public class Queue
     public Map<String, String> getResourcesAssigned() {
         return resourcesAssigned;
     }
-    
-    
+
     /**
      * @return the resourcesDefault
      */

@@ -2,17 +2,17 @@
  * The MIT License
  *
  * Copyright (c) 2012-2015 Bruno P. Kinoshita, BioUno
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -35,12 +35,11 @@ import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
  * A node of a PBS cluster.
- * 
+ *
  * @author Bruno P. Kinoshita
  * @since 0.1
  */
-public class Node
-    implements Serializable {
+public class Node implements Serializable {
 
     private static final long serialVersionUID = 2980172720826485748L;
 
@@ -123,13 +122,14 @@ public class Node
     public List<Job> getJobs() {
         return jobs;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
-    
+
 }

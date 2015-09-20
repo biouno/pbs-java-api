@@ -2,17 +2,17 @@
  * The MIT License
  *
  * Copyright (c) 2012-2015 Bruno P. Kinoshita, BioUno
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,26 +31,24 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
- * A PBS job. This job can be submitted to the PBS cluster, but its state is
- * always detached. The information in a Job object is updated as you call
- * service methods.
+ * A PBS job. This job can be submitted to the PBS cluster, but its state is always detached. The information in a Job
+ * object is updated as you call service methods.
  *
  * @author Bruno P. Kinoshita
  * @since 0.1
  */
-public class Job
-    implements Serializable {
+public class Job implements Serializable {
 
-	private static final long serialVersionUID = -8705011705872768446L;
+    private static final long serialVersionUID = -8705011705872768446L;
 
-	/**
+    /**
      * Number used to index a job in a queue (used by qnodes).
      */
     private int queueIndex;
 
     /**
-     * Job ID. Usually a sequential identification number followed by a . (dot)
-     * and the computer name (eg: 23434.thunder.mackenzie.br).
+     * Job ID. Usually a sequential identification number followed by a . (dot) and the computer name (eg:
+     * 23434.thunder.mackenzie.br).
      */
     private String id;
 
@@ -101,7 +99,7 @@ public class Job
     private String keepFiles;
 
     private String mailPoints;
-    
+
     private String mailUsers;
 
     private String mtime;
@@ -160,8 +158,7 @@ public class Job
     private int exitStatus;
 
     /**
-     * Submit args. Usually a shell script, but can include too other command
-     * line parameters.
+     * Submit args. Usually a shell script, but can include too other command line parameters.
      */
     private String submitArgs;
 
@@ -171,7 +168,7 @@ public class Job
     private String startTime;
 
     private int startCount;
-    
+
     private int jobArrayId;
 
     /**
@@ -192,7 +189,7 @@ public class Job
      * Host that submitted the job.
      */
     private String submitHost;
-    
+
     private long walltimeRemaining;
 
     /**
@@ -443,14 +440,14 @@ public class Job
     public void setMailPoints(String mailPoints) {
         this.mailPoints = mailPoints;
     }
-    
+
     /**
      * @return the mailUsers
      */
     public String getMailUsers() {
         return mailUsers;
     }
-    
+
     /**
      * @param mailUsers the mailUsers to set
      */
@@ -807,22 +804,23 @@ public class Job
     public void setSubmitHost(String submitHost) {
         this.submitHost = submitHost;
     }
-    
+
     /**
      * @return the walltimeRemaining
      */
     public long getWalltimeRemaining() {
         return this.walltimeRemaining;
     }
-    
+
     /**
      * @param walltimeRemaining the walltimeRemaining
      */
     public void setWalltimeRemaining(long walltimeRemaining) {
         this.walltimeRemaining = walltimeRemaining;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     @Override
@@ -830,14 +828,12 @@ public class Job
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 
-	public int getJobArrayId()
-	{
-		return jobArrayId;
-	}
+    public int getJobArrayId() {
+        return jobArrayId;
+    }
 
-	public void setJobArrayId(int jobArrayId)
-	{
-		this.jobArrayId = jobArrayId;
-	}
+    public void setJobArrayId(int jobArrayId) {
+        this.jobArrayId = jobArrayId;
+    }
 
 }
