@@ -2,11 +2,17 @@
 
 A simple Java API for interfacing with a PBS cluster.
 
+## Examples
+
+
+
 ## API JavaDocs
 
 The API JavaDocs are published in the gh-pages of this GitHub repository, and are publicly available at [http://biouno.org/pbs-java-api/](http://biouno.org/pbs-java-api/)
 
-## Development guide
+## Developers guide
+
+Contributions as pull requests, issues or comments and suggestions are welcome. Please use the [BioUno mailing lists](http://biouno.org/contact.html) to send us your feedback. For pull requests and issues, use the project repository in GitHub, please. 
 
 ### Testing PBS servers with Docker
 
