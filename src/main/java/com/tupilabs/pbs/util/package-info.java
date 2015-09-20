@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) <2012> <Bruno P. Kinoshita>
+ * Copyright (c) 2012-2015 Bruno P. Kinoshita, BioUno
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
  */
 /**
  * Utility classes.
- * @author Bruno P. Kinoshita - http://www.kinoshita.eti.br
+ * @author Bruno P. Kinoshita
  * @since 0.1
  */
 package com.tupilabs.pbs.util;

@@ -14,4 +14,6 @@ docker run -d -h docker.example.com \
 agaveapi/torque
 ```
 
+And later start it with `docker start torque` when necessary.
+
 We are using the [agaveapi/torque](https://hub.docker.com/r/agaveapi/torque/) image.
